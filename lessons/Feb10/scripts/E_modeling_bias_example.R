@@ -1,12 +1,11 @@
 #' Author: Ted Kwartler
-#' Date: Dec 5, 2022
+#' Date: Jan 30, 2022
 #' Purpose: Biased Modeling Example
 #'Megacorp is a hypothetical large and successful corporation that makes modern high-tech products. Whenever Megacorp advertises new job vacancies, their human resources team are overwhelmed by the many people who apply for a role. They want an automated process to filter through the resumes, to give them a short list of applicants who match best. Megacorp has a database containing the resumes and hiring results of applicants from the past few years. They track variables like age, gender, education and other details around the job applicant’s profile, and they want to use the text from the resume, including participation in extracurricular activities.
 
 # Set WD
-setwd("~/Desktop/Harvard_DataMining_Business_Student/personalFiles")
+setwd("~/Desktop/Odum_Feb_23/personal")
 options(scipen = 999)
-
 
 # Libs
 library(text2vec)
@@ -16,7 +15,6 @@ library(glmnet)
 library(MLmetrics)
 library(vtreat)
 library(fairness)
-library(readr)
 
 # Custom cleaning function
 resumeClean<-function(xVec, stops=stopwords("SMART")){
@@ -28,7 +26,7 @@ resumeClean<-function(xVec, stops=stopwords("SMART")){
 }
 
 # Data
-candidates <- read_csv('https://raw.githubusercontent.com/kwartler/Harvard_DataMining_Business_Student/master/Lessons/M_Technology_Ethics/data/HR%20Hiring%20(Bias%20%26%20Fairness).csv')
+candidates <- read.csv('https://raw.githubusercontent.com/kwartler/Odum_Feb_23/main/lessons/Feb10/data/HR_Hiring_Bias_Fairness.csv')
 
 ### SAMPLE : Partitioning
 set.seed(1234)
@@ -73,12 +71,12 @@ drops <- c('ApplicationID', 'AgeBracket', 'Gender', 'Summary')
 allCandidateData <- allCandidateData[, !(names(allCandidateData) %in% drops)]
 
 # Now let's prepare for modeling by making dummy variables
-plan <- designTreatmentsC(allCandidateData, #data
-                          names(allCandidateData), #x-var columns
-                          'Hired', # y-var name
-                          'Yes') #success factor level
+#plan <- designTreatmentsC(allCandidateData, #data
+#                          names(allCandidateData), #x-var columns
+#                          'Hired', # y-var name
+#                          'Yes') #success factor level
 #saveRDS(plan, 'variable_treatment_plan.rds')
-#plan <- readRDS('variable_treatment_plan.rds')
+plan <- readRDS("~/Desktop/Odum_Feb_23/lessons/Feb10/data/variable_treatment_plan.rds")
 allCandidateData <- prepare(plan, allCandidateData)
 
 # Separate the y var & engineered variables
@@ -86,14 +84,15 @@ allCandidateData <- allCandidateData[,-grep('Hired|_catP',
                                             names(allCandidateData))]
 
 ### MODEL
-candidateFit <- cv.glmnet(as.matrix(allCandidateData),
-                          y=as.factor(trainCandidates$Hired),
-                          alpha=0.9,
-                          family='binomial',
-                          type.measure='auc',
-                          nfolds=3,
-                          intercept=F)
+#candidateFit <- cv.glmnet(as.matrix(allCandidateData),
+#                          y=as.factor(trainCandidates$Hired),
+#                          alpha=0.9,
+#                          family='binomial',
+#                          type.measure='auc',
+#                          nfolds=3,
+#                          intercept=F)
 #saveRDS(candidateFit, 'candidateFit.rds')
+candidateFit <- readRDS('~/Desktop/Odum_Feb_23/lessons/Feb10/data/candidateFit.rds')
 
 ### ANALYZE
 # Get Predictions on the training set from all 3 models
@@ -179,14 +178,14 @@ dem_parity(data = trainDF,
 
 
 # Since gender was removed, let's figure out whats happening.
-genderFit <- cv.glmnet(as.matrix(allCandidateData),
-                       y=as.factor(trainCandidates$Gender), #predicting "male"
-                       alpha=0.9,
-                       family='binomial',
-                       type.measure='auc',
-                       nfolds=3,
-                       intercept=F)
-
+#genderFit <- cv.glmnet(as.matrix(allCandidateData),
+#                       y=as.factor(trainCandidates$Gender), #predicting "male"
+#                       alpha=0.9,
+#                       family='binomial',
+#                       type.measure='auc',
+#                       nfolds=3,
+#                       intercept=F)
+genderFit <- readRDS('~/Desktop/Odum_Feb_23/lessons/Feb10/data/genderFit.rds')
 # Subset to impacting terms to identify issues for rebuilding the model
 bestTerms <- subset(as.matrix(coefficients(genderFit)), 
                     as.matrix(coefficients(genderFit)) !=0)
@@ -194,23 +193,6 @@ bestTerms <- data.frame(term = rownames(bestTerms), value = bestTerms[,1])
 bestTerms <- bestTerms[order(bestTerms$value, decreasing=T), ] #proxies
 
 # Indicative of "male"
-head(bestTerms, 15)
-
-# What about for age?
-ageFit <- cv.glmnet(as.matrix(allCandidateData),
-                       y=as.factor(trainCandidates$AgeBracket), #predicting "40 and Over"
-                       alpha=0.9,
-                       family='binomial',
-                       type.measure='auc',
-                       nfolds=3,
-                       intercept=F)
-
-# Subset to impacting terms to identify issues for rebuilding the model
-bestTerms <- subset(as.matrix(coefficients(ageFit)), 
-                    as.matrix(coefficients(ageFit)) !=0)
-bestTerms <- data.frame(term = rownames(bestTerms), value = bestTerms[,1])
-bestTerms <- bestTerms[order(bestTerms$value, decreasing=T), ] #proxies
-# Indicative of "40 and Over"
 head(bestTerms, 15)
 
 # End
