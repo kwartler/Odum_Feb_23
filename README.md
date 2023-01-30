@@ -12,9 +12,22 @@ The following introduction to R video will aid students new to R programming.  *
 |------|-------------------------|-------------------|-------------------------------|
 |Feb6  | Setup? What is NLP?     | Basic Strings     | Pre-Processing Term Frequency |
 |Feb8  | Frequency & Association | Word Clouds       | Word Clouds & Pyramids        |
-|Feb10 | Sentiment & Polarity    |Doc Classification | Data Sources, Ethics          |
+|Feb10 | Sentiment & Polarity    | Doc Classification| Technology ML Ethics          |
 
 ## R Packages for Installation
+
+```
+# Individually you can use 
+# install.packages('packageName') such as below:
+install.packages('ggplot2')
+
+# or 
+install.packages('pacman')
+pacman::p_load(caret, corpus, dplyr, echarts4r, ggplot2, ggthemes, glmnet, hunspell,
+               lexicon, magrittr, mgsub, pbapply, plotrix, qdap, rbokeh, RColorBrewer,                   sentimentr, spelling, stringi, stringr, text2vec, textdata,
+               tidyr, tidytext, tm, wordcloud)
+
+```
 
 ### If you're on a Mac, sometimes `library(qdap)` will fail due to an rJava issue.  If so, these resources can help.
 
