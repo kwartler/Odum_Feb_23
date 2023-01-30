@@ -106,11 +106,11 @@ dataDF[1,2] #by index row 1, column 2
 ## Extract from R to a file; object to save then path, otherwise will go to working directory (fruit basket)
 # Windows slashes are backwards!
 write.csv(dataDF,
-          "~/Desktop/Hult_NLP_student_intensive/lessons/class1/data/example.csv",
+          "~/Desktop/Odum_Feb_23/personal/example.csv",
           row.names=F) 
 
 ## Read in a file as an object; just path
-newDF <- read.csv("~/Desktop/Hult_NLP_student_intensive/lessons/class1/data/example.csv") 
+newDF <- read.csv("https://raw.githubusercontent.com/kwartler/Odum_Feb_23/main/prepMaterial/data/example.csv") 
 
 # Examine & Compare to original
 newDF
@@ -127,7 +127,7 @@ table(vec1)
 barplot(table(vec1))
 
 # Save a plot to disk programatically
-jpeg('~/Desktop/Hult_NLP_student_intensive/lessons/class1/data/example.jpg') # open up a background graphics device, declare path and file name
+jpeg('~/Desktop/Odum_Feb_23/personal/example.jpg') # open up a background graphics device, declare path and file name
 barplot(table(vec1)) # plot it
 dev.off() # turn off the background graphics device
 

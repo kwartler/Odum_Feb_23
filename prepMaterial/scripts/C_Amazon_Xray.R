@@ -1,13 +1,13 @@
 #' Title: Amazon X-Ray part 2
 #' Purpose: Explore more movie data
 #' Author: Ted Kwartler
-#' email: edward.kwartler@faculty.hult.edu
+#' email: edwardkwartler@fas.harvard.edu
 #' License: GPL>=3
-#' Date: Jan 18 2022
+#' Date: Jan 29, 2023
 #'
 
 ### 1. Set working directory to your specific movie
-setwd("~/Desktop/Hult_NLP_student_intensive/lessons/class1/data")
+setwd("~/Desktop/Odum_Feb_23/personal")
 
 # Turn off scientific notation
 options(scipen = 999)
@@ -16,13 +16,11 @@ options(scipen = 999)
 library(ggplot2)
 library(ggthemes)
 library(rbokeh)
-library(RCurl)
+library(magrittr)
 
 ### 3. Read in data
 # Use the read.csv function for your specific onScreenCharacters.csv file
-#gitFile <- url('https://raw.githubusercontent.com/kwartler/Hult_NLP_student_intensive/main/lessons/class1/data/forceAwakens_onScreenCharacters.csv')
-#charDF <- read.csv(gitFile)
-charDF   <- read.csv('forceAwakens_onScreenCharacters.csv')
+charDF   <- read.csv('https://raw.githubusercontent.com/kwartler/Odum_Feb_23/main/prepMaterial/data/forceAwakens_onScreenCharacters.csv')
 
 ### 4. Apply functions to clean up data & get insights/analysis
 # Use the names function to review the names of charDF
@@ -46,7 +44,7 @@ charDF$sceneEndSecs <- charDF$sceneEnd / 1000
 # Total character appearances
 nrow(charDF)
 
-# Sometimes there are duplicated rows (not in lego movie)
+# Sometimes there are duplicated rows
 # ie Star Wars BB-8 is duplicated because there are 2 puppeteers, lets remove any duplicate records
 charDF$dupes <- duplicated(charDF) #T/F if it is duplicated
 head(charDF)

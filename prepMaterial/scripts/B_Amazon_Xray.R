@@ -7,7 +7,7 @@
 #'
 
 ### 1. Set working directory to your specific movie
-setwd("~/Desktop/Hult_NLP_student_intensive/lessons/class1/data")
+setwd("~/Desktop/Odum_Feb_23/personal")
 
 # Turn off scientific notation
 options(scipen = 999)
@@ -15,13 +15,10 @@ options(scipen = 999)
 ### 2. Load libraries to customize R
 library(ggplot2)
 library(ggthemes)
-library(RCurl)
 
 ### 3. Read in data
 # Use the read.csv function for your specific definedScenes.csv file
-#gitFile <- url('https://raw.githubusercontent.com/kwartler/Hult_NLP_student_intensive/main/lessons/class1/data/lego_definedScenes.csv')
-#scenesDF <- read.csv(gitFile)
-scenesDF   <- read.csv('lego_definedScenes.csv')
+scenesDF   <- read.csv('https://raw.githubusercontent.com/kwartler/Odum_Feb_23/main/prepMaterial/data/lego_definedScenes.csv')
 
 ### 4. Apply functions to clean up data & get insights/analysis
 # Use the names function to review the names of scenesDF
@@ -68,10 +65,11 @@ scenesDF$name <- stringi::stri_encode(scenesDF$name, "", "UTF-8")
 ################ BACK TO PPT FOR EXPLANATION ##################
 ggplot(scenesDF[-16,], aes(colour = name)) + 
   geom_segment(aes(x = start, xend = end,
-                   y = id,    yend = id), size = 3) +
+                   y = id,    yend = id), linewidth = 3) +
   geom_text(data=scenesDF[-16,], aes(x = end, y = id, label = name), 
             size = 2.25, color = 'black', alpha = 0.80, check_overlap = TRUE) +
-  theme_gdocs() + theme(legend.position = "none")
+  theme_gdocs() + theme(legend.position = "none") +
+  ggtitle('Star Wars: Force Awakens Scene Length')
 
 # End
 
