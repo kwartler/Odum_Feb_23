@@ -65,7 +65,9 @@ for( i in 1:length(allTxt)){
 correctedTxt
 
 # Or use mgsub
-correctedTxt2 <- pblapply(allTxt, mgsub, correctionLexicon$wrong, correctionLexicon$right)
+correctedTxt2 <- pblapply(allTxt, mgsub,
+                          correctionLexicon$wrong,
+                          correctionLexicon$right)
 correctedTxt2 <- do.call(rbind, correctedTxt2)
 correctedTxt2
 # End
