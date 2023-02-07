@@ -4,3 +4,4 @@
 .Ruserdata
 /personal
 .DS_Store
+.httr-oauth
