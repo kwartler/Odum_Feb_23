@@ -1,5 +1,5 @@
 #' Author: Ted Kwartler
-#' Date: Jan 30, 2022
+#' Date: Feb 8, 2023
 #' Purpose: Biased Modeling Example
 #'Megacorp is a hypothetical large and successful corporation that makes modern high-tech products. Whenever Megacorp advertises new job vacancies, their human resources team are overwhelmed by the many people who apply for a role. They want an automated process to filter through the resumes, to give them a short list of applicants who match best. Megacorp has a database containing the resumes and hiring results of applicants from the past few years. They track variables like age, gender, education and other details around the job applicant’s profile, and they want to use the text from the resume, including participation in extracurricular activities.
 
@@ -142,17 +142,7 @@ testDF <- data.frame(Preds  = testPreds[,1],
                      Gender     = testCandidates$Gender)
 head(trainDF)
 
-# Model behavior
-# Test for equal representation "positive class parity" for every one
-# 40 and over candidate predicted to be hired, 
-# how many under 40 candidates are predicted to be hired? 
-# Positive class for >40 / positive class for <40
-dem_parity(data = trainDF, 
-           outcome = 'actuals', 
-           group = 'AgeBracket',
-           preds = 'Preds', base = '40 and Over')
-
-# What about gender?  For every male predicted to be hired, 
+# Model behavior - Gender:For every male predicted to be hired, 
 #how many females are predicted to be hired? 
 dem_parity(data = trainDF, 
            outcome = 'actuals', 
@@ -164,18 +154,6 @@ dem_parity(data = testDF,
            outcome = 'actuals', 
            group = 'Gender',
            preds = 'Preds', base = 'Male')
-
-# What about by probability
-trainDF$trainProbs <- predict(candidateFit,
-                      as.matrix(allCandidateData),
-                      type = 'response',
-                      s    = candidateFit$lambda.min)
-dem_parity(data = trainDF, 
-           outcome = 'actuals', 
-           group = 'Gender',
-           probs = 'trainProbs',
-           preds = 'Preds', base = 'Male')
-
 
 # Since gender was removed, let's figure out whats happening.
 #genderFit <- cv.glmnet(as.matrix(allCandidateData),

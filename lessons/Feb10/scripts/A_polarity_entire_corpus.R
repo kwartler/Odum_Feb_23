@@ -3,7 +3,7 @@
 #' Author: Ted Kwartler
 #' email: edwardkwartler@fas.harvard.edu
 #' License: GPL>=3
-#' Date: Jan 29, 2023
+#' Date: Feb 8, 2023
 #'
 
 # WD
@@ -18,8 +18,30 @@ library(sentimentr)
 text <- readLines('https://raw.githubusercontent.com/kwartler/Odum_Feb_23/main/lessons/Feb10/data/pharrell_williams_happy.txt')
 
 # Polarity on the document
+#sentimentr; diff calc & lexicon treating punctuation differently
 polarity(text) #qdap
-sentimentr::sentiment_by(text)#sentimentr; diff calc & lexicon treating punctuation differently
+sentimentr::sentiment_by(text, 
+                         polarity_dt = lexicon::hash_sentiment_jockers_rinker)
+
+# Let's examine the lexicons used
+?polarity
+head(qdapDictionaries::key.pol)
+nrow(qdapDictionaries::key.pol)
+summary(qdapDictionaries::key.pol)
+
+?sentiment_by
+head(lexicon::hash_sentiment_jockers_rinker)
+nrow(lexicon::hash_sentiment_jockers_rinker)
+summary(lexicon::hash_sentiment_jockers_rinker)
+
+# Other per specific function
+head(qdapDictionaries::negation.words)
+head(qdapDictionaries::amplification.words)
+head(qdapDictionaries::deamplification.words)
+
+#actually classes not numbers (negators (1), amplifiers [intensifiers] (2), de-amplifiers [downtoners] (3) and adversative conjunctions (4) )
+head(lexicon::hash_valence_shifters)
+
 
 # Does it Matter if we process it?
 # Custom Functions

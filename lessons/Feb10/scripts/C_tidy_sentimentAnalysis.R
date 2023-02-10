@@ -3,7 +3,7 @@
 #' Author: Ted Kwartler
 #' email: edwardkwartler@fas.harvard.edu
 #' License: GPL>=3
-#' Date: Jan 29, 2023
+#' Date: Feb 8, 2023
 #'
 
 # WD
@@ -72,8 +72,6 @@ bingSent <- inner_join(tidyCorp, bing, by=c('term' = 'word'))
 bingSent
 
 # Quick Analysis
-table(bingSent$sentiment) #tally ignoring count
-table(bingSent$sentiment, bingSent$count) #only a few with more than 1 term
 aggregate(count~sentiment,bingSent, sum) #correct way to sum them
 
 # Compare original with qdap::Polarity
