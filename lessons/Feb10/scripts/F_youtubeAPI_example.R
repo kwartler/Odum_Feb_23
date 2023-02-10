@@ -20,7 +20,7 @@ setwd("~/Desktop/Odum_Feb_23/personal")
 
 # Youtube URL
 # https://www.youtube.com/watch?v=K5Rly83zfuI&ab_channel=TheDailyShowwithTrevorNoah
-youtubeCaption <- "https://www.youtube.com/api/timedtext?v=K5Rly83zfuI&caps=asr&xoaf=4&hl=en&ip=0.0.0.0&ipbits=0&expire=1675933221&sparams=ip%2Cipbits%2Cexpire%2Cv%2Ccaps%2Cxoaf&signature=889E048F9A9EA7760802CC53158285FBB98471FC.3E107C98C86AE624302AEDB05998FA3895CA3E11&key=yt8&lang=en-US&fmt=json3&xorb=2&xobt=3&xovt=3&cbrand=apple&cbr=Chrome&cbrver=108.0.0.0&c=WEB&cver=2.20230206.06.00&cplayer=UNIPLAYER&cos=Macintosh&cosver=10_15_7&cplatform=DESKTOP"
+youtubeCaption <- "https://www.youtube.com/api/timedtext?v=K5Rly83zfuI&caps=asr&xoaf=4&hl=en&ip=0.0.0.0&ipbits=0&expire=1676070165&sparams=ip%2Cipbits%2Cexpire%2Cv%2Ccaps%2Cxoaf&signature=0EBE5C576F44950E21EFAC08A0E40F2D89C88B4D.45FEB49BE1B4CD74BCC16039C6345FD5BC56B36F&key=yt8&lang=en-US&fmt=json3&xorb=2&xobt=3&xovt=3&cbrand=apple&cbr=Chrome&cbrver=108.0.0.0&c=WEB&cver=2.20230206.06.00&cplayer=UNIPLAYER&cos=Macintosh&cosver=10_15_7&cplatform=DESKTOP"
 
 # Go get the data
 dat <- fromJSON(youtubeCaption) # you can even pass in a URL to go to a webpage
